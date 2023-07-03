@@ -2,7 +2,7 @@
   --primary-background-color: #2e2e30;
   --secondary-background-color: #1e1f21;
   --primary-text-color: #7e7e7f;
-  --primary-text-color-bold: #e1e0df;
+  --primary-text-color-bold: rgb(173, 186, 199);
   --secondary-text-color: #f06a6a;
 }
 
@@ -19,6 +19,14 @@
   background-color: var(--primary-background-color);
 }
 
+.secondary-background {
+  background-color: var(--secondary-background-color);
+}
+
 .border-primary-color {
   border-color: var(--primary-text-color);
+}
+
+.border-secondary-color {
+  border-color: var(--secondary-text-color);
 }

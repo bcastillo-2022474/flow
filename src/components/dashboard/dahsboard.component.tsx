@@ -1,6 +1,7 @@
 import {useQuery} from "@tanstack/react-query";
 import {fetchProjects} from "../../fetchs/fetchProjects.ts";
 import {formatDistance} from "date-fns"
+import {Link} from "react-router-dom";
 
 const DashBoard = () => {
     const data = useQuery(["dashboard"], fetchProjects)
@@ -27,8 +28,8 @@ const DashBoard = () => {
 
             {data.data?.map((project) => (
                 <>
-                    <div key={project.id}
-                         className="flex flex-col gap-1 hover:cursor-pointer primary-color-bold active:bg-gray-700">
+                    <Link to="project/:id" key={project.id}
+                          className="flex flex-col gap-1 hover:cursor-pointer primary-color-bold active:bg-gray-700">
                         <div className="flex justify-between p-1">
                             <div className="flex gap-2 items-center">
                                 <div className="bg-blue-900 primary-background rounded active:bg-red-700"
@@ -41,7 +42,7 @@ const DashBoard = () => {
                             <div
                                 className="text-sm">{formatDistance(project.startDate, new Date(), {addSuffix: true})}</div>
                         </div>
-                    </div>
+                    </Link>
                     <div className="border-primary-color border-b rounded"></div>
                 </>
             ))}
