@@ -1,0 +1,24 @@
+:root {
+  --primary-background-color: #2e2e30;
+  --secondary-background-color: #1e1f21;
+  --primary-text-color: #7e7e7f;
+  --primary-text-color-bold: #e1e0df;
+  --secondary-text-color: #f06a6a;
+}
+
+
+.primary-color {
+  color: var(--primary-text-color);
+}
+
+.primary-color-bold {
+  color: var(--primary-text-color-bold);
+}
+
+.primary-background {
+  background-color: var(--primary-background-color);
+}
+
+.border-primary-color {
+  border-color: var(--primary-text-color);
+}
