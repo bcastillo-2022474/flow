@@ -14,6 +14,7 @@ function App() {
             <header className="header sticky top-0 flex items-center px-2">
                 <span className="text-4xl primary-color-bold font-bold">Projects</span>
             </header>
+            {/*overflow-y-scroll*/}
             <main className="main overflow-y-scroll">
                 <ProjectContext.Provider value={{columnsTasks, setColumnsTasks}}>
 
@@ -36,6 +37,9 @@ function App() {
             <footer className="footer sticky bottom-0">
                 <Footer></Footer>
             </footer>
+            {/*// THIS HELPS TO AVOID THE STICKY FOOTER MOVING FROM HIS POSITION*/}
+            {/*// https://www.stevefenton.co.uk/blog/2022/12/mobile-position-sticky-issue/*/}
+            <div className="fixed"></div>
         </div>
     );
 }

@@ -79,7 +79,7 @@ const ProjectViewComponent = () => {
         <ProjectViewContext.Provider value={{objs, setObjs}}>
             <DragDropContext onDragEnd={onDragEnd}>
                 {/*overflow-x-scroll*/}
-                <div className="flex min-h-full gap-3 p-5 snap-x ">
+                <div className="flex min-h-full gap-3 p-5">
                     {columns.map((column: Column) => (
                         <ColumnComponent key={column.id} column={column}></ColumnComponent>
                     ))}
