@@ -10,7 +10,6 @@ const createMockProject = (): Project[] => {
             adminId: `${i}`,
             organizationId: `${i}`,
             startDate: new Date(),
-            endDate: null,
             sprints: [],
             columns: [],
             members: [],
