@@ -15,7 +15,7 @@ export type Organization = {
     name: string,
 
     //: relations
-    ownerId: string | null,
+    ownerId?: string,
     projects: Project[],
     OrganizationMembers: OrganizationMembers[],
 }
@@ -48,10 +48,10 @@ export type Column = {
 export type Sprint = {
     id: string,
     name: string,
-    description: string | null,
+    description?: string,
     startDate: Date,
-    endDate: Date | null
-    updatedAt: Date | null
+    endDate?: Date
+    updatedAt?: Date
 
     //: relations
     createdByUserId: string,
@@ -79,9 +79,9 @@ export type Project = {
     name: string,
     description: string,
     startDate: Date,
-    endDate: Date | null,
+    endDate?: Date,
     adminId: string,
-    organizationId: string | null,
+    organizationId?: string,
     sprints: Sprint[],
     columns: Column[],
     members: User[],
@@ -92,7 +92,7 @@ export type Project = {
 export type Attachment = {
     id: string,
     url: string,
-    createdAt: Date | null,
+    createdAt?: Date,
 
     //: relations
     taskId: string,
@@ -108,15 +108,17 @@ export enum Priority {
 
 export type Task = {
     id: string,
+    title: string,
+    number: number,
     description: string,
     createdAt: Date,
     updatedAt: Date,
-    dueDate: Date | null,
+    dueDate?: Date,
 
     //: relations
     priority: Priority
 
-    assignedToUserId: string | null,
+    assignedToUserId?: string,
     columnId: string,
     sprintId: string,
     comments: Comment[]
