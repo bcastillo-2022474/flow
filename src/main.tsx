@@ -11,6 +11,8 @@ import {
 } from "react-router-dom";
 import DashBoard from "./components/dashboard/dahsboard.component.tsx";
 import ProjectViewComponent from "./components/project-view/project-view.component.tsx";
+import Test from "./test/Test.tsx";
+
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -36,6 +38,10 @@ const router = createBrowserRouter([
             }
         ]
     },
+    {
+        path: "/test",
+        element: <Test/>
+    }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

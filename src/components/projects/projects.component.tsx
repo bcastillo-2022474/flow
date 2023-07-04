@@ -1,30 +1,29 @@
 import {Project} from "../../models/models.ts";
-import {useQuery} from "@tanstack/react-query";
-import {fetchProjectInfo} from "../../fetchs/fetchhProjectInfo.ts";
+import {Link} from "react-router-dom";
+import {formatDistance} from "date-fns";
 
-const ProjectComponent = ({name, description, id}: Project) => {
-    const response = useQuery(["project", id], fetchProjectInfo)
+const ProjectComponent = ({project: {name, description, id, startDate}}: { project: Project }) => {
 
-    if (response.isLoading) {
-        return (
-            <div className="project">
-                <div className="box"></div>
-                <div className="info">
-                    <div className="name">{name}</div>
-                    <div className="description">{description}</div>
-                </div>
-            </div>
-        )
-    }
 
     return (
-        <div className="project">
-                    <div className="box"></div>
-                    <div className="info">
-                        <div className="name">{name}</div>
-                        <div className="description">{description} {members.length} members</div>
+        <>
+            <Link to="project/:id" key={id}
+                  className="flex flex-col gap-1 hover:cursor-pointer primary-color-bold active:bg-gray-700">
+                <div className="flex justify-between p-1">
+                    <div className="flex gap-2 items-center">
+                        <div className="bg-blue-900 primary-background rounded active:bg-red-700"
+                             style={{width: "50px", height: "50px"}}></div>
+                        <div className="flex flex-col">
+                            <div>{name}</div>
+                            <div className="text-xs">{description}</div>
+                        </div>
                     </div>
+                    <div
+                        className="text-sm">{formatDistance(startDate, new Date(), {addSuffix: true})}</div>
                 </div>
+            </Link>
+            <div className="border-primary-color border-b rounded"></div>
+        </>
     )
 }
 
