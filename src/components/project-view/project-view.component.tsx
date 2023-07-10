@@ -1,91 +1,32 @@
 import ColumnComponent from "../column/column.component.tsx";
-import {createContext, Dispatch, SetStateAction, useState} from "react";
+import {useContext} from "react";
 import {DragDropContext} from "@hello-pangea/dnd";
-import {Column, Priority, Task} from "../../models/models.ts";
-
-export const ProjectViewContext = createContext<{
-    objs: { columnId: string, tasks: Task[] }[],
-    setObjs: Dispatch<SetStateAction<{ columnId: string, tasks: Task[] }[]>>
-}>({
-    objs: [],
-    setObjs: () => {
-        // do nothing
-    }
-});
-
-let times = 0;
-const createTasksMocks = (id: string, num: number): Task[] => {
-    const array: Task[] = []
-    for (let i = 0; i < num; i++) {
-        array.push({
-            title: "Lorem ipsum dolor sit amet.",
-            number: i + times,
-            updatedAt: new Date(),
-            id: `${i + times}`,
-            sprintId: "1",
-            columnId: `${id}`,
-            description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias, quod?",
-            comments: [],
-            attachments: [],
-            createdAt: new Date(),
-            priority: Priority.MEDIUM,
-            dueDate: new Date(),
-        })
-    }
-    times += num;
-    return array
-}
-
-const createColumnsMock = (): Column[] => {
-    const array: Column[] = []
-    for (let i = 0; i < 4; i++) {
-        array.push({
-            color: "rgb(110, 231, 183)",
-            id: `${i}`,
-            name: "TODO",
-            projectId: "1",
-            tasks: [],
-        })
-    }
-
-    return array
-}
+import {Column} from "../../models/models.ts";
+import {TaskContext} from "../../contexts/TaskProvider.tsx";
+import onDragEnd from "../../utilities/onDragEnd.ts";
+import {useQuery} from "@tanstack/react-query";
+import {fetchColumns} from "../../fetchs/fetchColumns.ts";
 
 
 const ProjectViewComponent = () => {
-    const columns = createColumnsMock();
-    const initialState = columns.map((column: Column) => {
-        return {columnId: column.id, tasks: createTasksMocks(column.id, 3)}
-    })
+    const response = useQuery(["columns"], fetchColumns);
+    // this is only to be able to provide the context to the onDragEnd function
+    const {columnsTasks, setColumnsTasks} = useContext(TaskContext)
 
-    const [objs, setObjs] = useState<{ columnId: string, tasks: Task[] }[]>(initialState);
-    const onDragEnd = (result: any) => {
-        if (!result.destination) return;
+    if (response.isLoading) return <div>Loading...</div>
+    if (response.isError) return <div>Error...</div>
 
-        const itemsDestination = objs.find(({columnId}) => columnId === result.destination.droppableId)?.tasks;
-        const itemsSource = objs.find(({columnId}) => columnId === result.source.droppableId)?.tasks;
-        if (!itemsDestination || !itemsSource) return;
-
-        const [reorderedItem] = itemsSource.splice(result.source.index, 1);
-        itemsDestination.splice(result.destination.index, 0, reorderedItem);
-
-        setObjs([...objs, {
-            columnId: result.source.droppableId,
-            tasks: itemsSource
-        }, {columnId: result.destination.droppableId, tasks: itemsDestination}]);
-    };
+    const columns = response.data || [];
 
     return (
-        <ProjectViewContext.Provider value={{objs, setObjs}}>
-            <DragDropContext onDragEnd={onDragEnd}>
-                {/*overflow-x-scroll*/}
-                <div className="flex min-h-full gap-3 p-5">
-                    {columns.map((column: Column) => (
-                        <ColumnComponent key={column.id} column={column}></ColumnComponent>
-                    ))}
-                </div>
-            </DragDropContext>
-        </ProjectViewContext.Provider>
+        <DragDropContext onDragEnd={(result) => onDragEnd(result, columnsTasks, setColumnsTasks)}>
+            {/*overflow-x-scroll*/}
+            <div className="flex min-h-full gap-3 p-5 overflow-x-scroll">
+                {columns.map((column: Column) => (
+                    <ColumnComponent key={column.id} column={column}></ColumnComponent>
+                ))}
+            </div>
+        </DragDropContext>
     )
 };
 
