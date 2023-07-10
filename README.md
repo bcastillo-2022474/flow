@@ -43,4 +43,4 @@ Flow aims to provide a comprehensive set of features to support effective task a
 
 # Flow (Front-end)
 
-This repository contains the front-end code for Flow, The application is being developed as a full stack solution, with the back-end code residing in a separate repository, for more information of the backend, refer to (this repositoritory)[https://github.com/bcastillo-2022474/job-board-backend].
+This repository contains the front-end code for Flow, The application is being developed as a full stack solution, with the back-end code residing in a separate repository, for more information of the backend, refer to [this repositoritory](https://github.com/bcastillo-2022474/flow-backend).
