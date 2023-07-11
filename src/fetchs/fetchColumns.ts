@@ -18,4 +18,3 @@ const createColumnsMock = (): Column[] => {
 export const fetchColumns = async (): Promise<Column[]> => {
     return createColumnsMock();
 };
-
