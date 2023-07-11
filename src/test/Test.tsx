@@ -62,7 +62,6 @@ function Test() {
 
         const itemsDestination = objs.find(({columnId}) => columnId === result.destination.droppableId)?.tasks;
         const itemsSource = objs.find(({columnId}) => columnId === result.source.droppableId)?.tasks;
-        console.log({itemsDestination, objs, result})
         if (!itemsDestination || !itemsSource) return;
 
         const [reorderedItem] = itemsSource.splice(result.source.index, 1);

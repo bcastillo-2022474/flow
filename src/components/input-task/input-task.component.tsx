@@ -1,16 +1,17 @@
 import {faCircleCheck} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {Dispatch, RefObject, SetStateAction, useContext} from "react";
+import {RefObject, useContext} from "react";
 import {TaskContext} from "../../contexts/TaskProvider.tsx";
 import {Priority, Task} from "../../models/models.ts";
+import {NewTaskStatusContext} from "../../contexts/newTaskStatusProvider.tsx";
 
 type Props = {
     inputRef: RefObject<HTMLInputElement>
-    setIsInputTaskOpen: Dispatch<SetStateAction<boolean>>
     columnId: string
     tasks: Task[]
 }
-const InputTaskComponent = ({inputRef, setIsInputTaskOpen, columnId, tasks}: Props) => {
+const InputTaskComponent = ({inputRef, columnId, tasks}: Props) => {
+    const {setIsInputTaskOpen} = useContext(NewTaskStatusContext);
     const {setColumnsTasks} = useContext(TaskContext)
 
     return (
@@ -41,7 +42,6 @@ const InputTaskComponent = ({inputRef, setIsInputTaskOpen, columnId, tasks}: Pro
                     return [...filteredState, {columnId, tasks: [...tasks, task]}]
                 })
                 setIsInputTaskOpen(false);
-
             }}
                    className="primary-color-bold p-2 bg-gray-700"/>
         </div>

@@ -1,6 +1,6 @@
 import {Task} from "../models/models.ts";
 
-import {createContext, Dispatch, SetStateAction, useState} from "react";
+import React, {createContext, Dispatch, SetStateAction, useState} from "react";
 
 export type ColumnTasks = {
     columnId: string;
@@ -16,13 +16,13 @@ export const TaskContext = createContext<{
     }
 });
 
-const TaskProvider = ({children}: any) => {
+const TaskProvider = React.memo(({children}: any) => {
     const [columnsTasks, setColumnsTasks] = useState<ColumnTasks[]>([]); // [{columnId: string},{},{}
     return (
         <TaskContext.Provider value={{columnsTasks, setColumnsTasks}}>
             {children}
         </TaskContext.Provider>
     )
-}
+})
 
 export default TaskProvider;

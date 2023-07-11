@@ -1,11 +1,9 @@
 import TaskComponent from "../task/task.component.tsx";
 import {Droppable} from "@hello-pangea/dnd";
-import {useRef, useState} from "react";
-import {createPortal} from "react-dom";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useContext, useRef} from "react";
 import {Task} from "../../models/models.ts";
 import InputTaskComponent from "../input-task/input-task.component.tsx";
+import {NewTaskStatusContext} from "../../contexts/newTaskStatusProvider.tsx";
 
 type Props = {
     tasks: Task[],
@@ -13,8 +11,9 @@ type Props = {
 }
 
 const TaskContainerComponent = ({tasks, columnId}: Props) => {
-    const [isInputTaskOpen, setIsInputTaskOpen] = useState(false);
+    const {isInputTaskOpen, currentColumnId} = useContext(NewTaskStatusContext);
     const inputRef = useRef<HTMLInputElement>(null);
+    const isThisColumnOpen = currentColumnId === columnId;
 
     return (
         <>
@@ -24,25 +23,14 @@ const TaskContainerComponent = ({tasks, columnId}: Props) => {
                         {tasks.map((task, index) => (
                             <TaskComponent key={task.id} task={task} pos={index}></TaskComponent>
                         ))}
-                        {isInputTaskOpen && (
+                        {isInputTaskOpen && isThisColumnOpen && (
                             <InputTaskComponent tasks={tasks} columnId={columnId}
-                                                setIsInputTaskOpen={setIsInputTaskOpen}
                                                 inputRef={inputRef}></InputTaskComponent>
                         )}
                         {provided.placeholder}
                     </div>
                 )}
             </Droppable>
-            {createPortal(
-                <div onClick={() => {
-                    setIsInputTaskOpen(true);
-                }}
-                     className="flex gap-2 items-center border rounded-2xl p-3 primary-color-bold absolute bottom-0 right-0 my-20 mx-3 primary-background cursor-pointer">
-                    <span>New Task</span>
-                    <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
-                </div>
-                ,
-                document.body)}
         </>
     )
 }
