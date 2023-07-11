@@ -1,19 +1,40 @@
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import TaskComponent from "../task/task.component.tsx";
-import {Column} from "../../models/models.ts";
-import {Droppable} from "@hello-pangea/dnd";
-import {useContext} from "react";
-import {ProjectViewContext} from "../project-view/project-view.component.tsx";
-// import {TestContext} from "../../test/Test.tsx";
+import {Column, Task} from "../../models/models.ts";
+import {useContext, useEffect} from "react";
+import {TaskContext} from "../../contexts/TaskProvider.tsx";
+import {useQuery} from "@tanstack/react-query";
+import {fetchTasksByColumn} from "../../fetchs/fetchTasksByColumn.ts";
+import TaskContainerComponent from "../task-container/task-container.component.tsx";
 
 const ColumnComponent = ({column: {id, name, color}}: { column: Column }) => {
-    const {tasks} = useContext(ProjectViewContext).objs.find(({columnId}) => columnId === id) || {tasks: []};
+    const {columnsTasks, setColumnsTasks} = useContext(TaskContext);
+    const response = useQuery<{ columnId: string, tasks: Task[] }>(["tasks", id], fetchTasksByColumn);
+
+    useEffect(() => {
+        if (!response.data) return;
+        if (response.isLoading || response.isError) return;
+
+        const columnTasksFetched = response.data;
+
+        // push the new column to the state
+        setColumnsTasks((prevState) => {
+            console.log({prevState})
+            const filteredState = prevState.filter(({columnId}) => columnId !== id);
+            return [...filteredState, columnTasksFetched]
+        });
+    }, [response.data, response.isLoading, response.isError])
+
+    if (response.isLoading) return <div>Loading...</div>
+    if (response.isError) return <div>Error...</div>
+
+    // const {tasks} = response.data || [];
+    const {tasks} = columnsTasks.find(({columnId}) => columnId === id) || {tasks: []};
+
+
     return (
         <div
-            className="snap-center snap-mandatory snap-always border border-primary-color rounded-3xl min-w-full p-5 secondary-background flex flex-col justify-between">
+            className="snap-center snap-mandatory snap-always border border-primary-color rounded-md min-w-full p-5 secondary-background flex flex-col justify-between">
             <div>
-                <div className="flex gap-1 items-center primary-color-bold bg-">
+                <div className="flex gap-1 items-center primary-color-bold">
                     <span className="rounded-full"
                           style={{width: "15px", height: "15px", backgroundColor: color}}></span>
                     <span>{name}</span>
@@ -24,20 +45,8 @@ const ColumnComponent = ({column: {id, name, color}}: { column: Column }) => {
                 <div className="primary-color text-xs mb-3">
                     this is a description
                 </div>
-                <Droppable droppableId={id} type="column">
-                    {(provided) => (
-                        <div ref={provided.innerRef} {...provided.droppableProps} className="flex flex-col gap-2">
-                            {tasks.map((task, index) => (
-                                <TaskComponent key={task.id} task={task} pos={index}></TaskComponent>
-                            ))}
-                            {provided.placeholder}
-                        </div>
-                    )}
-                </Droppable>
+                <TaskContainerComponent tasks={tasks} columnId={id}></TaskContainerComponent>
             </div>
-            <div
-                className="btn flex justify-end primary-color-bold font-bold text items-center gap-2 hover:cursor-pointer">
-                <FontAwesomeIcon icon={faPlus}/><span>add Item</span></div>
         </div>
     )
 }

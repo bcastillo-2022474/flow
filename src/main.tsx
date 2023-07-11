@@ -12,6 +12,7 @@ import {
 import DashBoard from "./components/dashboard/dahsboard.component.tsx";
 import ProjectViewComponent from "./components/project-view/project-view.component.tsx";
 import Test from "./test/Test.tsx";
+import TaskProvider from "./contexts/TaskProvider.tsx";
 
 
 const queryClient = new QueryClient({
@@ -34,7 +35,9 @@ const router = createBrowserRouter([
             },
             {
                 path: "project/:id",
-                element: <ProjectViewComponent/>
+                element: (
+                    <TaskProvider><ProjectViewComponent/></TaskProvider>
+                ),
             }
         ]
     },
