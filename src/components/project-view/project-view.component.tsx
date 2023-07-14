@@ -11,7 +11,6 @@ import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {createPortal} from "react-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-
 const ProjectViewComponent = () => {
     const {setIsInputTaskOpen} = useContext(NewTaskStatusContext);
     const response = useQuery(["columns"], fetchColumns);

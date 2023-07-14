@@ -47,7 +47,6 @@ const ColumnComponent = ({column: {id, name, color}}: { column: Column }) => {
 
     return (
         <div className="min-w-full">
-            {/**/}
             <div ref={ref} className="sticky top-1/2 w-full h-0 border"></div>
             <div className="p-5">
                 <div
