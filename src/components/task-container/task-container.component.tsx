@@ -11,9 +11,9 @@ type Props = {
 }
 
 const TaskContainerComponent = ({tasks, columnId}: Props) => {
-    const {isInputTaskOpen, currentColumnId} = useContext(NewTaskStatusContext);
+    const {isInputTaskOpen, columnId: colId} = useContext(NewTaskStatusContext);
     const inputRef = useRef<HTMLInputElement>(null);
-    const isThisColumnOpen = currentColumnId === columnId;
+    const isThisColumnOpen = colId.current === columnId;
 
     return (
         <>

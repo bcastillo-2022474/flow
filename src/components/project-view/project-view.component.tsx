@@ -28,7 +28,7 @@ const ProjectViewComponent = () => {
                 {/*overflow-x-scroll breaks the Intersection Oberver*/}
                 <div className="flex relative min-h-full">
                     {columns.map((column: Column) => (
-                        <ColumnComponent column={column}></ColumnComponent>
+                        <ColumnComponent key={column.id} column={column}></ColumnComponent>
                     ))}
                 </div>
             </DragDropContext>

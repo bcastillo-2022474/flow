@@ -1,6 +1,6 @@
 import {Task} from "../models/models.ts";
 
-import React, {createContext, Dispatch, SetStateAction, useState} from "react";
+import React, {createContext, Dispatch, SetStateAction, useRef, useState} from "react";
 
 export type ColumnTasks = {
     columnId: string;
@@ -9,24 +9,21 @@ export type ColumnTasks = {
 export const NewTaskStatusContext = createContext<{
     setIsInputTaskOpen: Dispatch<SetStateAction<boolean>>,
     isInputTaskOpen: boolean,
-    currentColumnId: string,
-    setCurrentColumnId: Dispatch<SetStateAction<string>>
+    columnId: { current: string },
 }>({
     setIsInputTaskOpen: () => {
-// do nothing
-    }, isInputTaskOpen: false,
-    currentColumnId: "",
-    setCurrentColumnId: () => {
-// do nothing
-    }
+        // do nothing
+    },
+    isInputTaskOpen: false,
+    columnId: {current: ""},
 });
 
 const NewTaskStatusProvider = React.memo(({children}: any) => {
     const [isInputTaskOpen, setIsInputTaskOpen] = useState(false);
-    const [currentColumnId, setCurrentColumnId] = useState("");
+    const columnId = useRef<string>("");
     return (
         <NewTaskStatusContext.Provider
-            value={{currentColumnId, setCurrentColumnId, isInputTaskOpen, setIsInputTaskOpen}}>
+            value={{columnId, isInputTaskOpen, setIsInputTaskOpen}}>
             {children}
         </NewTaskStatusContext.Provider>
     )

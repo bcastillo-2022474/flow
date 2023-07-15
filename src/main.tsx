@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import {Provider} from 'react-redux'
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import App from './App.tsx'
 import "./index.css"
@@ -14,7 +13,6 @@ import ProjectViewComponent from "./components/project-view/project-view.compone
 import Test from "./test/Test.tsx";
 import TaskProvider from "./contexts/TaskProvider.tsx";
 import NewTaskStatusProvider from "./contexts/newTaskStatusProvider.tsx";
-import store from "./redux/store.ts";
 
 
 const queryClient = new QueryClient({
@@ -55,10 +53,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
-        <Provider store={store}>
-            <QueryClientProvider client={queryClient}>
-                <RouterProvider router={router}></RouterProvider>
-            </QueryClientProvider>
-        </Provider>
+        <QueryClientProvider client={queryClient}>
+            <RouterProvider router={router}></RouterProvider>
+        </QueryClientProvider>
     </React.StrictMode>,
 )

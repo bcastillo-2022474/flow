@@ -8,16 +8,16 @@ import {useInView} from "react-intersection-observer";
 import {NewTaskStatusContext} from "../../contexts/newTaskStatusProvider.tsx";
 
 const ColumnComponent = ({column: {id, name, color}}: { column: Column }) => {
-    const {setCurrentColumnId, currentColumnId, isInputTaskOpen, setIsInputTaskOpen} = useContext(NewTaskStatusContext)
+    const {columnId, isInputTaskOpen, setIsInputTaskOpen} = useContext(NewTaskStatusContext)
 
     const [ref] = useInView({
         threshold: 0.5,
         onChange: (inView) => {
             if (inView) {
-                setCurrentColumnId(id);
+                columnId.current = id;
                 return;
             }
-            if (currentColumnId === id && !inView && isInputTaskOpen) {
+            if (columnId.current === id && !inView && isInputTaskOpen) {
                 setIsInputTaskOpen(false);
             }
         }

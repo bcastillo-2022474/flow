@@ -26,7 +26,7 @@ const DashBoard = () => {
             <div className="border-primary-color border-b"></div>
 
             {data.data?.map((project) => (
-                <ProjectComponent project={project}></ProjectComponent>
+                <ProjectComponent key={project.id} project={project}></ProjectComponent>
             ))}
         </div>
     )
