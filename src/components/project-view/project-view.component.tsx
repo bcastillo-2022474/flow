@@ -6,13 +6,15 @@ import {TaskContext} from "../../contexts/TaskProvider.tsx";
 import onDragEnd from "../../utilities/onDragEnd.ts";
 import {useQuery} from "@tanstack/react-query";
 import {fetchColumns} from "../../fetchs/fetchColumns.ts";
-import {NewTaskStatusContext} from "../../contexts/newTaskStatusProvider.tsx";
+// import {NewTaskStatusContext} from "../../contexts/newTaskStatusProvider.tsx";
+import {useDispatch} from "react-redux";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {createPortal} from "react-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {setIsInputTaskOpen} from "../../redux/slices/newTaskStatusSlice.ts";
 
 const ProjectViewComponent = () => {
-    const {setIsInputTaskOpen} = useContext(NewTaskStatusContext);
+    const dispatch = useDispatch();
     const response = useQuery(["columns"], fetchColumns);
     // this is only to be able to provide the context to the onDragEnd function
     const {columnsTasks, setColumnsTasks} = useContext(TaskContext)
@@ -34,7 +36,7 @@ const ProjectViewComponent = () => {
             </DragDropContext>
             {createPortal(
                 <div onClick={() => {
-                    setIsInputTaskOpen(true);
+                    dispatch(setIsInputTaskOpen(true));
                 }}
                      className="flex gap-2 items-center border rounded-2xl p-3 primary-color-bold absolute bottom-0 right-0 my-20 mx-3 primary-background cursor-pointer">
                     <span>New Task</span>

@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import {Provider} from 'react-redux'
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import App from './App.tsx'
 import "./index.css"
@@ -8,11 +9,12 @@ import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
-import DashBoard from "./components/dashboard/dahsboard.component.tsx";
+import DashBoard from "./components/dashboard/dashboard.component.tsx";
 import ProjectViewComponent from "./components/project-view/project-view.component.tsx";
 import Test from "./test/Test.tsx";
 import TaskProvider from "./contexts/TaskProvider.tsx";
 import NewTaskStatusProvider from "./contexts/newTaskStatusProvider.tsx";
+import store from "./redux/store.ts";
 
 
 const queryClient = new QueryClient({
@@ -53,8 +55,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
-        <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router}></RouterProvider>
-        </QueryClientProvider>
+        <Provider store={store}>
+            <QueryClientProvider client={queryClient}>
+                <RouterProvider router={router}></RouterProvider>
+            </QueryClientProvider>
+        </Provider>
     </React.StrictMode>,
 )

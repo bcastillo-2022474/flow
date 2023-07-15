@@ -3,7 +3,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {RefObject, useContext} from "react";
 import {TaskContext} from "../../contexts/TaskProvider.tsx";
 import {Priority, Task} from "../../models/models.ts";
-import {NewTaskStatusContext} from "../../contexts/newTaskStatusProvider.tsx";
+// import {NewTaskStatusContext} from "../../contexts/newTaskStatusProvider.tsx";
+import {useDispatch} from "react-redux";
+import {setIsInputTaskOpen} from "../../redux/slices/newTaskStatusSlice.ts";
 
 type Props = {
     inputRef: RefObject<HTMLInputElement>
@@ -11,7 +13,8 @@ type Props = {
     tasks: Task[]
 }
 const InputTaskComponent = ({inputRef, columnId, tasks}: Props) => {
-    const {setIsInputTaskOpen} = useContext(NewTaskStatusContext);
+    // const {setIsInputTaskOpen} = useContext(NewTaskStatusContext);
+    const dispatch = useDispatch();
     const {setColumnsTasks} = useContext(TaskContext)
 
     return (
@@ -41,7 +44,7 @@ const InputTaskComponent = ({inputRef, columnId, tasks}: Props) => {
                     const filteredState = prevState.filter((x) => x.columnId !== columnId);
                     return [...filteredState, {columnId, tasks: [...tasks, task]}]
                 })
-                setIsInputTaskOpen(false);
+                dispatch(setIsInputTaskOpen(false));
             }}
                    className="primary-color-bold p-2 bg-gray-700"/>
         </div>
