@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, LinkProps, useNavigate } from "react-router-dom";
 
 type Props = {
     delay?: number;
@@ -16,7 +16,7 @@ const DelayLink = ({
     onDelayEnd,
     to,
     ...otherProps
-}: Props) => {
+}: Props & LinkProps) => {
     const navigate = useNavigate();
     return (
         <Link
