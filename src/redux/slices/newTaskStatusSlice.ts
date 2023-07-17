@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface NewTaskStatusState {
     isInputTaskOpen: boolean;
@@ -7,11 +7,11 @@ interface NewTaskStatusState {
 
 const initialState: NewTaskStatusState = {
     isInputTaskOpen: false,
-    currentColumnId: '',
+    currentColumnId: "",
 };
 
 const newTaskStatusSlice = createSlice({
-    name: 'newTaskStatus',
+    name: "newTaskStatus",
     initialState,
     reducers: {
         setIsInputTaskOpen: (state, action: PayloadAction<boolean>) => {
@@ -23,5 +23,6 @@ const newTaskStatusSlice = createSlice({
     },
 });
 
-export const {setIsInputTaskOpen, setCurrentColumnId} = newTaskStatusSlice.actions;
+export const { setIsInputTaskOpen, setCurrentColumnId } =
+    newTaskStatusSlice.actions;
 export default newTaskStatusSlice.reducer;

@@ -1,6 +1,14 @@
 :root {
-  --primary-background-color: #2e2e30;
+  //--primary-background-color: #2e2e30;
+  // more darker than #271030
+  //--primary-background-color: #220C24;
+  --primary-background-color: #0A264A;
+  //--primary-background-color: #044A22;
   --secondary-background-color: #1e1f21;
+  //--secondary-background-color: white;
+  --third-background-color: #19191A;
+  //--third-background-color: white;
+
   --primary-text-color: #7e7e7f;
   --primary-text-color-bold: rgb(173, 186, 199);
   --secondary-text-color: #f06a6a;
@@ -29,4 +37,8 @@
 
 .border-secondary-color {
   border-color: var(--secondary-text-color);
+}
+
+.third-background {
+  background-color: var(--third-background-color);
 }
