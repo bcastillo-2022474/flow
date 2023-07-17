@@ -1,51 +1,52 @@
 import ColumnComponent from "../column/column.component.tsx";
-import {useContext} from "react";
-import {DragDropContext} from "@hello-pangea/dnd";
-import {Column} from "../../models/models.ts";
-import {TaskContext} from "../../contexts/TaskProvider.tsx";
+import { useContext } from "react";
+import { DragDropContext } from "@hello-pangea/dnd";
+import { Column } from "../../models/models.ts";
+import { TaskContext } from "../../contexts/TaskProvider.tsx";
 import onDragEnd from "../../utilities/onDragEnd.ts";
-import {useQuery} from "@tanstack/react-query";
-import {fetchColumns} from "../../fetchs/fetchColumns.ts";
-// import {NewTaskStatusContext} from "../../contexts/newTaskStatusProvider.tsx";
-import {useDispatch} from "react-redux";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import {createPortal} from "react-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {setIsInputTaskOpen} from "../../redux/slices/newTaskStatusSlice.ts";
+import { useQuery } from "@tanstack/react-query";
+import { fetchColumns } from "../../fetchs/fetchColumns.ts";
+import { createPortal } from "react-dom";
+import { useMatch } from "react-router-dom";
+import NewTaskButtonComponent from "../new-task-button/new-task-button.component.tsx";
+import ModalTaskViewComponent from "../modal-task-view/modal-task-view.component.tsx";
 
 const ProjectViewComponent = () => {
-    const dispatch = useDispatch();
+    const match = useMatch("/project/:id/task/:idTask");
     const response = useQuery(["columns"], fetchColumns);
     // this is only to be able to provide the context to the onDragEnd function
-    const {columnsTasks, setColumnsTasks} = useContext(TaskContext)
+    const { columnsTasks, setColumnsTasks } = useContext(TaskContext);
 
-    if (response.isLoading) return <div>Loading...</div>
-    if (response.isError) return <div>Error...</div>
+    if (response.isLoading) return <div>Loading...</div>;
+    if (response.isError) return <div>Error...</div>;
 
     const columns = response.data || [];
 
     return (
         <>
-            <DragDropContext onDragEnd={(result) => onDragEnd(result, columnsTasks, setColumnsTasks)}>
+            <DragDropContext
+                onDragEnd={(result) => {
+                    onDragEnd(result, columnsTasks, setColumnsTasks);
+                }}
+            >
                 {/*overflow-x-scroll breaks the Intersection Oberver*/}
-                <div className="flex relative min-h-full">
+                {/*{"overflow-x-scroll snap-mandatory snap-x snap-always"} for */}
+                {/*the snap behaviour, currently disabled because overflow-x-scroll*/}
+                {/*breaks Intersection Observer and snap behaviour in general*/}
+                {/*breaks the drag and dro functionality*/}
+                <div className="relative flex min-h-full">
                     {columns.map((column: Column) => (
-                        <ColumnComponent key={column.id} column={column}></ColumnComponent>
+                        // to enable the snap behaviour, add the class snap-center
+                        <div className="min-w-full">
+                            <ColumnComponent key={column.id} column={column} />
+                        </div>
                     ))}
                 </div>
             </DragDropContext>
-            {createPortal(
-                <div onClick={() => {
-                    dispatch(setIsInputTaskOpen(true));
-                }}
-                     className="flex gap-2 items-center border rounded-2xl p-3 primary-color-bold absolute bottom-0 right-0 my-20 mx-3 primary-background cursor-pointer">
-                    <span>New Task</span>
-                    <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
-                </div>
-                ,
-                document.body)}
+            {createPortal(<NewTaskButtonComponent />, document.body)}
+            {match && createPortal(<ModalTaskViewComponent />, document.body)}
         </>
-    )
+    );
 };
 
 export default ProjectViewComponent;

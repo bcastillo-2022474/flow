@@ -1,4 +1,4 @@
-import {Project} from "../models/models.ts";
+import { Project } from "../models/models.ts";
 
 const createMockProject = (): Project[] => {
     const array: Project[] = [];
@@ -14,15 +14,15 @@ const createMockProject = (): Project[] => {
             columns: [],
             members: [],
             projectLevelPermissions: [],
-        }
+        };
         array.push(project);
     }
 
     return array;
-}
+};
 
 export const fetchProjects = async (): Promise<Project[]> => {
     /*const data = await fetch(`${URL}/projects`).then(res => res.json()).catch(err => console.log(err));
     return data || [];*/
     return createMockProject();
-}
+};

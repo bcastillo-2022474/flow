@@ -1,6 +1,6 @@
-import {Query} from "@tanstack/react-query";
+import { Query } from "@tanstack/react-query";
 
-export const fetchProjectInfo = ({queryKey}: Query ) => {
+export const fetchProjectInfo = ({ queryKey }: Query) => {
     const [, projectId] = queryKey;
-    return fetch(`http://localhost:3001/projects/${projectId}`)
-}
+    return fetch(`http://localhost:3001/projects/${projectId}`);
+};
