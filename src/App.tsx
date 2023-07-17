@@ -1,18 +1,20 @@
 import "./App.scss";
 import Footer from "./components/footer/footer.component.tsx";
-import {Outlet} from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 function App() {
     return (
         <div className="grid-container">
-            <header className="header sticky top-0 flex items-center px-2">
-                <span className="text-4xl primary-color-bold font-bold">Projects</span>
+            <header className="sticky top-0 z-10 flex items-center px-2 header">
+                <span className="text-4xl font-bold primary-color-bold">
+                    Projects
+                </span>
             </header>
             {/*overflow-y-scroll*/}
-            <main className="main overflow-y-scroll">
+            <main className="overflow-y-scroll main">
                 <Outlet></Outlet>
             </main>
-            <footer className="footer sticky bottom-0">
+            <footer className="sticky bottom-0 footer">
                 <Footer></Footer>
             </footer>
             {/*// THIS HELPS TO AVOID THE STICKY FOOTER MOVING FROM HIS POSITION*/}
