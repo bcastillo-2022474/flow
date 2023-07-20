@@ -1,11 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faChevronRight,
-    faClipboard,
-    faCodePullRequest,
     faEllipsis,
-    faFaceSmile,
-    faLink,
     faPaperclip,
 } from "@fortawesome/free-solid-svg-icons";
 // import TipTapEditorComponent from "../tip-tap-editor/tip-tap-editor.component.tsx";
@@ -27,11 +23,11 @@ const TaskDescriptionComponent = () => {
                 </div>
                 {/*<EditorContent editor={editor}></EditorContent>*/}
                 <EditorComponent
-                    placeholder="write something awesome..."
+                    placeholder="Title"
                     className="text-2xl text-[--gray-subtle] font-semibold  px-2 py-1"
                 ></EditorComponent>
                 <EditorComponent
-                    placeholder="lol"
+                    placeholder="Write a description"
                     className="text-sm text-[--gray-subtle] font-semibold bg-transparent bg-white"
                 ></EditorComponent>
                 <div className="border border-[--blue]"></div>
@@ -51,7 +47,7 @@ const TaskDescriptionComponent = () => {
                         <div className="grow relative">
                             <EditorComponent
                                 placeholder="leave a comment"
-                                className="p-4 text-[#626378] border bg-[#212234] h-[150px] overflow-y-scroll"
+                                className="p-4 text-[#626378] bg-[#212234] h-[150px] overflow-y-scroll"
                             ></EditorComponent>
                             <div className="absolute bottom-0 right-0 mr-4 mb-3 flex gap-2 items-center">
                                 <FontAwesomeIcon
@@ -62,12 +58,6 @@ const TaskDescriptionComponent = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                {/*<EditorContent className="text-xl" editor={editor}></EditorContent>*/}
-                <div className="flex cursor-pointer">
-                    <div className="rounded-full px-2 py-1 text-xl primary-background">
-                        <FontAwesomeIcon icon={faFaceSmile}></FontAwesomeIcon>
                     </div>
                 </div>
             </div>

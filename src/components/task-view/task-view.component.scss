@@ -1,10 +1,10 @@
 
 .slide-in {
-  transition: transform 0.3s ease-in-out;
   animation: slideIn 0.3s ease-in-out;
 }
 
 .slide-out {
+  transition: transform 0.3s linear;
   transform: translateX(100%);
 }
 
