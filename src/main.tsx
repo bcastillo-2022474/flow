@@ -5,7 +5,11 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App.tsx";
 import "./index.css";
 import "./variables.scss";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+    createBrowserRouter,
+    Navigate,
+    RouterProvider,
+} from "react-router-dom";
 import DashBoard from "./components/dashboard/dashboard.component.tsx";
 import ProjectViewComponent from "./components/project-view/project-view.component.tsx";
 import TaskProvider from "./contexts/TaskProvider.tsx";
@@ -33,23 +37,32 @@ const router = createBrowserRouter([
             },
             {
                 path: "project/:id",
-                element: (
-                    <TaskProvider>
-                        <NewTaskStatusProvider>
-                            <ProjectViewComponent />
-                        </NewTaskStatusProvider>
-                    </TaskProvider>
-                ),
                 children: [
+                    { path: "", element: <Navigate to="view/1" /> },
                     {
-                        path: "task/:idTask",
-                        element: (
-                            <TaskProvider>
-                                <NewTaskStatusProvider>
-                                    <ProjectViewComponent />
-                                </NewTaskStatusProvider>
-                            </TaskProvider>
-                        ),
+                        path: "view",
+                        children: [
+                            {
+                                path: "1",
+                                element: (
+                                    <TaskProvider>
+                                        <NewTaskStatusProvider>
+                                            <ProjectViewComponent />
+                                        </NewTaskStatusProvider>
+                                    </TaskProvider>
+                                ),
+                            },
+                            {
+                                path: ":view/task/:idTask",
+                                element: (
+                                    <TaskProvider>
+                                        <NewTaskStatusProvider>
+                                            <ProjectViewComponent />
+                                        </NewTaskStatusProvider>
+                                    </TaskProvider>
+                                ),
+                            },
+                        ],
                     },
                 ],
             },

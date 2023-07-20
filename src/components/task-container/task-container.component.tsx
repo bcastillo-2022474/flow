@@ -27,7 +27,7 @@ const TaskContainerComponent = ({ tasks, columnId }: Props) => {
                     <div
                         ref={provided.innerRef}
                         {...provided.droppableProps}
-                        className="flex flex-col gap-2"
+                        className="flex grow overflow-y-scroll flex-col gap-2"
                     >
                         {tasks.map((task, index) => (
                             <TaskComponent

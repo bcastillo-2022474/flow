@@ -6,7 +6,7 @@ const createTasksMocks = (id: string, num: number): Task[] => {
     const array: Task[] = [];
     for (let i = 0; i < num; i++) {
         array.push({
-            title: "Lorem ipsum dolor sit amet.",
+            title: "CST-21",
             number: i + times,
             updatedAt: new Date(),
             id: `${i + times}`,
@@ -33,7 +33,7 @@ export const fetchTasksByColumn = async ({
 }> => {
     const [, columnId] = queryKey;
     return {
-        tasks: createTasksMocks(columnId as string, 10),
+        tasks: createTasksMocks(columnId as string, 5),
         columnId: columnId as string,
     };
 };
